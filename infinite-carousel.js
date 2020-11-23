@@ -14,9 +14,9 @@ function infiniteCarousel (numberOfRows, numberOfColumns, startRowIndex, startCo
         c0 = startColumnIndex;
         prevRowStep = r0;
         prevColumnStep = c0;
-        addingRow(makingRow())
+        addingRow(makingRow());
         carousel();
-        return ourWay
+        return ourWay;
     } else {
         console.log('Please, check your input values:\n' +
             '1 <= R <= 100\n' +
@@ -24,7 +24,6 @@ function infiniteCarousel (numberOfRows, numberOfColumns, startRowIndex, startCo
             '0 <= r0 < R\n' +
             '0 <= c0 < C\n')
     }
-
 }
 
     function makingRow () {                 //making row with
@@ -38,15 +37,15 @@ function infiniteCarousel (numberOfRows, numberOfColumns, startRowIndex, startCo
 function addingRow () {
     if (columnIndex < R) {
         arrWithColAndRows.push(makingRow());
-        columnIndex++
+        columnIndex++;
         addingRow();
     }
 }
 
 function addCellToWay () {
-    try {        //if our cell is undefined, we expect error, so we use try/cat to prevent that
+    try {        //if our cell is undefined, we expect error, so we use try/catch to prevent that
         if(arrWithColAndRows[prevRowStep][prevColumnStep] !== undefined) {
-            ourWay.push(arrWithColAndRows[prevRowStep][prevColumnStep])
+            ourWay.push(arrWithColAndRows[prevRowStep][prevColumnStep]);
         }
     } catch (error) {
         return false
@@ -60,8 +59,9 @@ function stepByStep () {        // with sepByStep function we can add all steps,
                 addCellToWay();
             }
         } else if (r0 < prevRowStep) {
-            for (prevRowStep -= 1; prevRowStep >= r0; prevRowStep--)
+            for (prevRowStep -= 1; prevRowStep >= r0; prevRowStep--) {
                 addCellToWay();
+            }
         }
     } else if (c0 !== prevColumnStep) {
        if (c0 > prevColumnStep) {
@@ -76,27 +76,26 @@ function stepByStep () {        // with sepByStep function we can add all steps,
    }  else {
        addCellToWay();  //if it is the first step, we just call the function addCellToWay
    }
-
 }
 
 function carousel () {
         r0 -= step;
-        stepByStep()                //Up
+        stepByStep();                //Up
         prevRowStep = r0;
         step++;
         c0 += step;
-        stepByStep()                //Right
+        stepByStep();                //Right
         prevColumnStep = c0;
         r0 += step;
-        stepByStep()                //Down
+        stepByStep();                //Down
         prevRowStep = r0;
         step++;
         c0 -= step;
-        stepByStep()                //Left
+        stepByStep();                //Left
         prevColumnStep = c0;
 
         if (step <= R*C) {
-            carousel()
+            carousel();
         }
 }
 

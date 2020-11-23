@@ -1,8 +1,22 @@
-let R, C, r0, c0 , columnIndex = 0, step = 0, index = 0, prevRowStep, prevColumnStep;
-const arrWithColAndRows = [];
-const ourWay = [];
+let R,
+  C,
+  r0,
+  c0,
+  columnIndex = 0,
+  step = 0,
+  index = 0,
+  prevRowStep,
+  prevColumnStep,
+  arrWithColAndRows = [],
+  ourWay = [];
+
 
 function infiniteCarousel (numberOfRows, numberOfColumns, startRowIndex, startColumnIndex) {
+    arrWithColAndRows = [];  //if our infiniteCarousel work more than one time we should reboot our default values
+    ourWay = [];
+    step = 0;
+    index = 0;
+    columnIndex = 0;
     if(1 <= numberOfRows && numberOfRows <= 100 &&
         1 <= numberOfColumns && numberOfColumns<= 100 &&
         0 <= startRowIndex && startRowIndex < numberOfRows &&
@@ -12,10 +26,14 @@ function infiniteCarousel (numberOfRows, numberOfColumns, startRowIndex, startCo
         C = numberOfColumns;
         r0 = startRowIndex;
         c0 = startColumnIndex;
+
         prevRowStep = r0;
         prevColumnStep = c0;
         addingRow(makingRow());
         carousel();
+
+        console.log(arrWithColAndRows);
+
         return ourWay;
     } else {
         console.log('Please, check your input values:\n' +

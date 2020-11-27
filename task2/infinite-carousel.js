@@ -31,9 +31,6 @@ function infiniteCarousel (numberOfRows, numberOfColumns, startRowIndex, startCo
         prevColumnStep = c0;
         addingRow(makingRow());
         carousel();
-
-        console.log(arrWithColAndRows);
-
         return ourWay;
     } else {
         console.log('Please, check your input values:\n' +

@@ -51,51 +51,36 @@ $(document).ready(function () {
     }
   };
 
-  const nextSlide = () => {
-    // change slide on next
+  const changeSlide = (typeOfButton) => {
+    if (typeof typeOfButton !== 'string'){
+      typeOfButton = typeOfButton.target.classList.value
+    }
     transition("on");
     const defaultWidthOfSlide = parseInt(slides.css("left"));
-      if (defaultWidthOfBox === parseInt($("#firstImg").css("left"))) {
-      setTimeout(() => {
-        transition("off");
-        defaultPosition("next");
-      }, 500);
-    }
-    if (defaultWidthOfSlide % defaultWidthOfBox === 0) {
-      for (let i = 1; i <= amountOfSlides; i++) {
-        const el = $(`.slide:nth-child(${i}`);
-        const position = parseInt(el.css("left"));
-        const width = parseInt(el.css("width"));
-        el.css("left", `${position - width}px`);
-      }
-      index++; //changing class of dot on 'active'
-      if (index > amountOfDots) {
-        index = 1;
-      }
-      dots.removeClass("active");
-      $(`.dot:nth-child(${index})`).toggleClass("active");
-    }
-  }
+    const posFst = parseInt($("#firstImg").css("left"));
+    const posLast = parseInt($("#lastImg").css("left"));
 
-  const prevSlide = () => {
-    //change slide on prev
-    transition("on");
-    const defaultWidthOfSlide = parseInt(slides.css("left"));
-    if (-defaultWidthOfBox === parseInt($("#lastImg").css("left"))) {
-      setTimeout(() => {
-        transition("off");
-        defaultPosition("prev");
-      }, 500);
-    }
+      if (typeOfButton === 'next' &&
+          defaultWidthOfBox === posFst ||
+          typeOfButton === 'prev' &&
+          -defaultWidthOfBox === posLast
+      ) {
+        setTimeout(() => {
+          transition("off");
+          defaultPosition(typeOfButton);
+        }, 500);
+      }
     if (defaultWidthOfSlide % defaultWidthOfBox === 0) {
       for (let i = 1; i <= amountOfSlides; i++) {
         const el = $(`.slide:nth-child(${i}`);
         const position = parseInt(el.css("left"));
         const width = parseInt(el.css("width"));
-        el.css("left", `${position + width}px`);
+        el.css("left", `${typeOfButton === 'next' ? position - width : position + width}px`);
       }
-      index--; // changing class of dot on 'active'
-      if (index < 1) {
+      typeOfButton === 'next' ? index++ : index--; //changing class of dot on 'active'
+      if (index > amountOfDots && typeOfButton === 'next') {
+        index = 1;
+      } else if (index < 1 && typeOfButton === 'prev') {
         index = amountOfDots;
       }
       dots.removeClass("active");
@@ -103,9 +88,9 @@ $(document).ready(function () {
     }
   }
 
-  $(".prev").on("click", prevSlide);
+  $(".prev").on("click", changeSlide);
 
-  $(".next").on("click", nextSlide);
+  $(".next").on("click", changeSlide);
 
   dots.on("click", function (e) {
       //selecting slide using dot
@@ -130,10 +115,10 @@ $(document).ready(function () {
         endPosition = e2.clientX;
         if (startPosition > endPosition) {
           clicked = true;
-          nextSlide();
+          changeSlide('next');
         } else if (startPosition < endPosition) {
           clicked = true;
-          prevSlide();
+          changeSlide('prev');
         }
       }
     });
